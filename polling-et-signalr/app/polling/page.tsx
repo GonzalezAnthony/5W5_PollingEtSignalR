@@ -32,12 +32,11 @@ export default function Home() {
   }
 
   async function updateTasks() {
-    let testTasks = new Array<UselessTask>(
-      { id: 1, text: "Test Task 1", completed: false },
-      { id: 2, text: "Test Task 2", completed: true });
-    setTasks(testTasks);
+    let result = await axios.get<any>(apiUrl+'UselessTasks/GetAll');
+    setTasks(result.data);
     // TODO: Faire une première implémentation simple avec un appel au serveur pour obtenir la liste des tâches
     // TODO: UNE FOIS QUE VOUS AVEZ TESTER AVEC DEUX CLIENTS: Utiliser le polling pour mettre la liste de tasks à jour chaque seconde
+    setTimeout(updateTasks, 1000);
   }
 
   return (
