@@ -7,22 +7,28 @@ import { UselessTask } from "../models/UselessTask";
 
 export default function Home() {
 
+  const apiUrl = "http://localhost:5042/api/";
   const [tasks, setTasks] = React.useState<UselessTask[]>([]);
 
   useEffect(() => {
     updateTasks();
   }, []);
 
-  function handleTaskAdd(taskName: string) {
+  async function handleTaskAdd(taskName: string) {
     // TODO On invoke la méthode pour ajouter une tâche sur le serveur (Contrôleur d'API)
+   let newTasks = [...tasks];
+   let result = await axios.post<UselessTask>(apiUrl + 'UselessTasks/Add?taskText=' + taskName, null)
+   newTasks.push(result.data);
+   setTasks(newTasks);
   }
 
-  function onTaskToggle(id: number) {
+  async function onTaskToggle(id: number) {
     // TODO On invoke la méthode pour compléter une tâche sur le serveur (Contrôleur d'API)
-
     let tasksCopy : UselessTask[] = [...tasks];    
     tasksCopy.find(task => task.id === id)!.completed = true;
     setTasks(tasksCopy);
+
+    return axios.get<any>(apiUrl+'UselessTasks/Complete/'+id);
   }
 
   async function updateTasks() {
