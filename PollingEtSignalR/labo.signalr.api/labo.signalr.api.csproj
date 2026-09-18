@@ -25,7 +25,4 @@
 	<PackageReference Include="NuGet.Protocol" Version="6.12.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Hubs\" />
-  </ItemGroup>
 </Project>
